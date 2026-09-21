@@ -11,5 +11,9 @@ namespace HospitalManagementApi.Models
         public DateTime AppointmentDate { get; set; }
 
         public string Status { get; set; } = "Pending";
+
+        public Doctor? Doctor { get; set; }
+
+        public Patient? Patient { get; set; }
     }
 }
