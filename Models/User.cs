@@ -16,5 +16,13 @@ namespace HospitalManagementApi.Models
         public string Password { get; set; } = string.Empty;
 
         public Role Role { get; set; }
+
+        public int? DoctorId { get; set; }
+
+        public int? PatientId { get; set; }
+
+        public Doctor? Doctor { get; set; }
+
+        public Patient? Patient { get; set; }
     }
 }
