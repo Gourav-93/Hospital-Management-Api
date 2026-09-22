@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HospitalManagementApi.Data;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HospitalManagementApi.Controllers
 {
     [ApiController]
     [Route("api/dashboard")]
+    [Authorize(Roles = "Admin")]
     public class DashboardController : ControllerBase
     {
         private readonly AppDbContext _context;

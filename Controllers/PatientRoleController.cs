@@ -1,12 +1,13 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagementApi.Controllers
 {
     [ApiController]
     [Route("api/patient-role")]
+    [Authorize(Roles = "Patient")]
     public class PatientRoleController : ControllerBase
     {
-        // GET: api/patient-role
         [HttpGet]
         public IActionResult GetPatientAccess()
         {

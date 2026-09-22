@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagementApi.Controllers
 {
     [ApiController]
     [Route("api/doctor-role")]
+    [Authorize(Roles = "Doctor")]
     public class DoctorRoleController : ControllerBase
     {
         [HttpGet]

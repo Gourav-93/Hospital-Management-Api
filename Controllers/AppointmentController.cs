@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HospitalManagementApi.Data;
 using HospitalManagementApi.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HospitalManagementApi.Controllers
 {
@@ -18,6 +19,7 @@ namespace HospitalManagementApi.Controllers
 
         // GET: api/appointment
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllAppointments()
         {
             var appointments = await _context.Appointments
@@ -47,6 +49,7 @@ namespace HospitalManagementApi.Controllers
 
         // GET: api/appointment/1
         [HttpGet("{id}")]
+        [Authorize(Roles = "Admin, Doctor, Patient")]
         public async Task<IActionResult> GetAppointmentById(int id)
         {
             var appointment = await _context.Appointments
@@ -85,6 +88,7 @@ namespace HospitalManagementApi.Controllers
 
         // GET: api/appointment/status/Pending
         [HttpGet("status/{status}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAppointmentsByStatus(string status)
         {
             var appointments = await _context.Appointments
@@ -123,6 +127,7 @@ namespace HospitalManagementApi.Controllers
 
         // POST: api/appointment
         [HttpPost]
+        [Authorize(Roles = "Admin, Doctor, Patient")]
         public async Task<IActionResult> CreateAppointment(
             Appointment appointment)
         {
@@ -174,6 +179,7 @@ namespace HospitalManagementApi.Controllers
 
         // PUT: api/appointment/1
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin, Doctor")]
         public async Task<IActionResult> UpdateAppointment(
             int id,
             Appointment appointment)
@@ -243,6 +249,7 @@ namespace HospitalManagementApi.Controllers
 
         // DELETE: api/appointment/1
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteAppointment(int id)
         {
             var appointment =
@@ -264,6 +271,96 @@ namespace HospitalManagementApi.Controllers
             {
                 message = "Appointment deleted successfully"
             });
+        }
+        // GET: api/appointment/my-appointments
+        // Doctor ke apne appointments
+        [HttpGet("my-appointments")]
+        [Authorize(Roles = "Doctor")]
+        public async Task<IActionResult> GetDoctorAppointments()
+        {
+            var doctorIdClaim = User.FindFirst("DoctorId")?.Value;
+
+            if (doctorIdClaim == null)
+            {
+                return BadRequest(new
+                {
+                    message = "DoctorId not found in token"
+                });
+            }
+
+            if (!int.TryParse(doctorIdClaim, out int doctorId))
+            {
+                return BadRequest(new
+                {
+                    message = "Invalid DoctorId"
+                });
+            }
+
+            var appointments = await _context.Appointments
+                .Include(a => a.Doctor)
+                .Include(a => a.Patient)
+                .Where(a => a.DoctorId == doctorId)
+                .Select(a => new
+                {
+                    a.Id,
+
+                    DoctorId = a.DoctorId,
+                    DoctorName = a.Doctor!.Name,
+
+                    PatientId = a.PatientId,
+                    PatientName = a.Patient!.Name,
+
+                    a.AppointmentDate,
+                    a.Status
+                })
+                .ToListAsync();
+
+            return Ok(appointments);
+        }
+        // GET: api/appointment/my-patient-appointments
+        // Patient ke apne appointments
+        [HttpGet("my-patient-appointments")]
+        [Authorize(Roles = "Patient")]
+        public async Task<IActionResult> GetPatientAppointments()
+        {
+            var patientIdClaim = User.FindFirst("PatientId")?.Value;
+
+            if (patientIdClaim == null)
+            {
+                return BadRequest(new
+                {
+                    message = "PatientId not found in token"
+                });
+            }
+
+            if (!int.TryParse(patientIdClaim, out int patientId))
+            {
+                return BadRequest(new
+                {
+                    message = "Invalid PatientId"
+                });
+            }
+
+            var appointments = await _context.Appointments
+                .Include(a => a.Doctor)
+                .Include(a => a.Patient)
+                .Where(a => a.PatientId == patientId)
+                .Select(a => new
+                {
+                    a.Id,
+
+                    DoctorId = a.DoctorId,
+                    DoctorName = a.Doctor!.Name,
+
+                    PatientId = a.PatientId,
+                    PatientName = a.Patient!.Name,
+
+                    a.AppointmentDate,
+                    a.Status
+                })
+                .ToListAsync();
+
+            return Ok(appointments);
         }
     }
 }

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments - Hospital Management System</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h2>Hospital Admin</h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html" id="nav-dashboard">Dashboard</a></li>
+            <li><a href="doctors.html" id="nav-doctors">Doctors</a></li>
+            <li><a href="patients.html" id="nav-patients">Patients</a></li>
+            <li><a href="appointments.html" class="active" id="nav-appointments">Appointments</a></li>
+            <li style="margin-top: auto; border-top: 1px solid var(--border-color); padding-top: 10px;">
+                <a href="#" id="logout-btn" style="color: var(--warning);">Logout</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <h1>Manage Appointments</h1>
+        </div>
+
+        <div class="data-container">
+            <div class="toolbar">
+                <select id="statusFilter" class="search-box" style="width: 200px;">
+                    <option value="">All Statuses</option>
+                    <option value="Pending">Pending</option>
+                    <option value="Confirmed">Confirmed</option>
+                    <option value="Completed">Completed</option>
+                    <option value="Cancelled">Cancelled</option>
+                </select>
+                <button class="btn btn-primary" onclick="openModal()">+ Add Appointment</button>
+            </div>
+
+            <div id="loader" class="loader">Loading appointments...</div>
+
+            <table id="appointmentsTable" style="display: none;">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Doctor</th>
+                        <th>Patient</th>
+                        <th>Date & Time</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="appointmentsTableBody">
+                    <!-- Data will be populated here -->
+                </tbody>
+            </table>
+            
+            <div id="empty-state" class="loader" style="display: none;">No appointments found.</div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Modal -->
+    <div id="appointmentModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add Appointment</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <form id="appointmentForm">
+                <input type="hidden" id="appointmentId">
+                <div class="form-group">
+                    <label for="doctorId">Doctor</label>
+                    <select id="doctorId" required>
+                        <option value="">Select Doctor</option>
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="patientId">Patient</label>
+                    <select id="patientId" required>
+                        <option value="">Select Patient</option>
+                        <!-- Populated dynamically -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="appointmentDate">Date and Time</label>
+                    <input type="datetime-local" id="appointmentDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select id="status" required>
+                        <option value="Pending">Pending</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/appointments.js"></script>
+</body>
+</html>

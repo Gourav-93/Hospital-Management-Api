@@ -242,3 +242,13 @@ C:\Users\Dell\OneDrive\Desktop\HospitalManagementApi\obj\Debug\net10.0\refint\Ho
 C:\Users\Dell\OneDrive\Desktop\HospitalManagementApi\obj\Debug\net10.0\HospitalManagementApi.pdb
 C:\Users\Dell\OneDrive\Desktop\HospitalManagementApi\obj\Debug\net10.0\HospitalManagementApi.genruntimeconfig.cache
 C:\Users\Dell\OneDrive\Desktop\HospitalManagementApi\obj\Debug\net10.0\ref\HospitalManagementApi.dll
+C:\Users\Dell\OneDrive\Desktop\HospitalManagementApi\bin\Debug\net10.0\BCrypt-Net-Next.dll
+C:\Users\Dell\OneDrive\Desktop\HospitalManagementApi\bin\Debug\net10.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Dell\OneDrive\Desktop\HospitalManagementApi\bin\Debug\net10.0\Microsoft.Bcl.Cryptography.dll
+C:\Users\Dell\OneDrive\Desktop\HospitalManagementApi\bin\Debug\net10.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\Dell\OneDrive\Desktop\HospitalManagementApi\bin\Debug\net10.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Dell\OneDrive\Desktop\HospitalManagementApi\bin\Debug\net10.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Dell\OneDrive\Desktop\HospitalManagementApi\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.dll
+C:\Users\Dell\OneDrive\Desktop\HospitalManagementApi\bin\Debug\net10.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+C:\Users\Dell\OneDrive\Desktop\HospitalManagementApi\bin\Debug\net10.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\Dell\OneDrive\Desktop\HospitalManagementApi\bin\Debug\net10.0\System.IdentityModel.Tokens.Jwt.dll

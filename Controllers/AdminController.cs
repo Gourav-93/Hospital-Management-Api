@@ -1,12 +1,13 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HospitalManagementApi.Controllers
 {
     [ApiController]
     [Route("api/admin")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : ControllerBase
     {
-        // GET: api/admin
         [HttpGet]
         public IActionResult GetAdminDashboard()
         {
