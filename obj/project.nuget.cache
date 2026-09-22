@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "TTvkv2msGZQ=",
+  "dgSpecHash": "5+UZ+UuLkZQ=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Dell\\OneDrive\\Desktop\\New folder\\HospitalManagementApi\\HospitalManagementApi.csproj",
+  "projectFilePath": "C:\\Users\\Dell\\OneDrive\\Desktop\\HospitalManagementApi\\HospitalManagementApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Dell\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Dell\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.12\\microsoft.aspnetcore.openapi.10.0.12.nupkg.sha512",

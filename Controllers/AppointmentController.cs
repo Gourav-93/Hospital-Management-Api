@@ -28,10 +28,14 @@ namespace HospitalManagementApi.Controllers
                     a.Id,
 
                     DoctorId = a.DoctorId,
-                    DoctorName = a.Doctor != null ? a.Doctor.Name : null,
+                    DoctorName = a.Doctor != null
+                        ? a.Doctor.Name
+                        : null,
 
                     PatientId = a.PatientId,
-                    PatientName = a.Patient != null ? a.Patient.Name : null,
+                    PatientName = a.Patient != null
+                        ? a.Patient.Name
+                        : null,
 
                     a.AppointmentDate,
                     a.Status
@@ -54,10 +58,14 @@ namespace HospitalManagementApi.Controllers
                     a.Id,
 
                     DoctorId = a.DoctorId,
-                    DoctorName = a.Doctor != null ? a.Doctor.Name : null,
+                    DoctorName = a.Doctor != null
+                        ? a.Doctor.Name
+                        : null,
 
                     PatientId = a.PatientId,
-                    PatientName = a.Patient != null ? a.Patient.Name : null,
+                    PatientName = a.Patient != null
+                        ? a.Patient.Name
+                        : null,
 
                     a.AppointmentDate,
                     a.Status
@@ -75,12 +83,51 @@ namespace HospitalManagementApi.Controllers
             return Ok(appointment);
         }
 
+        // GET: api/appointment/status/Pending
+        [HttpGet("status/{status}")]
+        public async Task<IActionResult> GetAppointmentsByStatus(string status)
+        {
+            var appointments = await _context.Appointments
+                .Include(a => a.Doctor)
+                .Include(a => a.Patient)
+                .Where(a => a.Status.ToLower() == status.ToLower())
+                .Select(a => new
+                {
+                    a.Id,
+
+                    DoctorId = a.DoctorId,
+                    DoctorName = a.Doctor != null
+                        ? a.Doctor.Name
+                        : null,
+
+                    PatientId = a.PatientId,
+                    PatientName = a.Patient != null
+                        ? a.Patient.Name
+                        : null,
+
+                    a.AppointmentDate,
+                    a.Status
+                })
+                .ToListAsync();
+
+            if (appointments.Count == 0)
+            {
+                return NotFound(new
+                {
+                    message = "No appointments found with this status"
+                });
+            }
+
+            return Ok(appointments);
+        }
+
         // POST: api/appointment
         [HttpPost]
-        public async Task<IActionResult> CreateAppointment(Appointment appointment)
+        public async Task<IActionResult> CreateAppointment(
+            Appointment appointment)
         {
-            // Check Doctor
-            var doctor = await _context.Doctors.FindAsync(appointment.DoctorId);
+            var doctor =
+                await _context.Doctors.FindAsync(appointment.DoctorId);
 
             if (doctor == null)
             {
@@ -90,8 +137,8 @@ namespace HospitalManagementApi.Controllers
                 });
             }
 
-            // Check Patient
-            var patient = await _context.Patients.FindAsync(appointment.PatientId);
+            var patient =
+                await _context.Patients.FindAsync(appointment.PatientId);
 
             if (patient == null)
             {
@@ -108,13 +155,17 @@ namespace HospitalManagementApi.Controllers
             return Ok(new
             {
                 message = "Appointment created successfully",
+
                 appointment = new
                 {
                     appointment.Id,
+
                     DoctorId = doctor.Id,
                     DoctorName = doctor.Name,
+
                     PatientId = patient.Id,
                     PatientName = patient.Name,
+
                     appointment.AppointmentDate,
                     appointment.Status
                 }
@@ -138,8 +189,8 @@ namespace HospitalManagementApi.Controllers
                 });
             }
 
-            // Check Doctor
-            var doctor = await _context.Doctors.FindAsync(appointment.DoctorId);
+            var doctor =
+                await _context.Doctors.FindAsync(appointment.DoctorId);
 
             if (doctor == null)
             {
@@ -149,8 +200,8 @@ namespace HospitalManagementApi.Controllers
                 });
             }
 
-            // Check Patient
-            var patient = await _context.Patients.FindAsync(appointment.PatientId);
+            var patient =
+                await _context.Patients.FindAsync(appointment.PatientId);
 
             if (patient == null)
             {
@@ -164,11 +215,9 @@ namespace HospitalManagementApi.Controllers
 
             existingAppointment.PatientId = appointment.PatientId;
 
-            existingAppointment.AppointmentDate =
-                appointment.AppointmentDate;
+            existingAppointment.AppointmentDate = appointment.AppointmentDate;
 
-            existingAppointment.Status =
-                appointment.Status;
+            existingAppointment.Status = appointment.Status;
 
             await _context.SaveChangesAsync();
 

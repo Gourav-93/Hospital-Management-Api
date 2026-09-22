@@ -2056,11 +2056,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Dell\\OneDrive\\Desktop\\New folder\\HospitalManagementApi\\HospitalManagementApi.csproj",
+      "projectUniqueName": "C:\\Users\\Dell\\OneDrive\\Desktop\\HospitalManagementApi\\HospitalManagementApi.csproj",
       "projectName": "HospitalManagementApi",
-      "projectPath": "C:\\Users\\Dell\\OneDrive\\Desktop\\New folder\\HospitalManagementApi\\HospitalManagementApi.csproj",
+      "projectPath": "C:\\Users\\Dell\\OneDrive\\Desktop\\HospitalManagementApi\\HospitalManagementApi.csproj",
       "packagesPath": "C:\\Users\\Dell\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Dell\\OneDrive\\Desktop\\New folder\\HospitalManagementApi\\obj\\",
+      "outputPath": "C:\\Users\\Dell\\OneDrive\\Desktop\\HospitalManagementApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Dell\\AppData\\Roaming\\NuGet\\NuGet.Config"

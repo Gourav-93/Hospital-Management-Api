@@ -16,7 +16,7 @@ namespace HospitalManagementApi.Controllers
             _context = context;
         }
 
-
+        // GET: api/patient
         [HttpGet]
         public async Task<IActionResult> GetAllPatients()
         {
@@ -25,7 +25,7 @@ namespace HospitalManagementApi.Controllers
             return Ok(patients);
         }
 
-
+        // GET: api/patient/1
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPatientById(int id)
         {
@@ -42,7 +42,26 @@ namespace HospitalManagementApi.Controllers
             return Ok(patient);
         }
 
+        // GET: api/patient/search?name=rahul
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchPatient(string name)
+        {
+            var patients = await _context.Patients
+                .Where(p => p.Name.ToLower().Contains(name.ToLower()))
+                .ToListAsync();
 
+            if (patients.Count == 0)
+            {
+                return NotFound(new
+                {
+                    message = "No patient found"
+                });
+            }
+
+            return Ok(patients);
+        }
+
+        // POST: api/patient
         [HttpPost]
         public async Task<IActionResult> CreatePatient(Patient patient)
         {
@@ -57,11 +76,14 @@ namespace HospitalManagementApi.Controllers
             });
         }
 
-
+        // PUT: api/patient/1
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePatient(int id, Patient patient)
+        public async Task<IActionResult> UpdatePatient(
+            int id,
+            Patient patient)
         {
-            var existingPatient = await _context.Patients.FindAsync(id);
+            var existingPatient =
+                await _context.Patients.FindAsync(id);
 
             if (existingPatient == null)
             {
@@ -86,7 +108,7 @@ namespace HospitalManagementApi.Controllers
             });
         }
 
-
+        // DELETE: api/patient/1
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePatient(int id)
         {

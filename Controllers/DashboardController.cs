@@ -15,6 +15,7 @@ namespace HospitalManagementApi.Controllers
             _context = context;
         }
 
+        // GET: api/dashboard
         [HttpGet]
         public async Task<IActionResult> GetDashboard()
         {
