@@ -2,8 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HospitalManagementApi.Data;
 using HospitalManagementApi.Models;
-using Microsoft.AspNetCore.Authorization;
-using System.Security.Claims;
 
 namespace HospitalManagementApi.Controllers
 {
@@ -20,7 +18,6 @@ namespace HospitalManagementApi.Controllers
 
         // GET: api/doctor
         [HttpGet]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetAllDoctors()
         {
             var doctors = await _context.Doctors.ToListAsync();
@@ -30,7 +27,6 @@ namespace HospitalManagementApi.Controllers
 
         // GET: api/doctor/1
         [HttpGet("{id}")]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> GetDoctorById(int id)
         {
             var doctor = await _context.Doctors.FindAsync(id);
@@ -46,29 +42,8 @@ namespace HospitalManagementApi.Controllers
             return Ok(doctor);
         }
 
-        // GET: api/doctor/search?name=sharma
-        [HttpGet("search")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> SearchDoctor(string name)
-        {
-            var doctors = await _context.Doctors
-                .Where(d => d.Name.ToLower().Contains(name.ToLower()))
-                .ToListAsync();
-
-            if (doctors.Count == 0)
-            {
-                return NotFound(new
-                {
-                    message = "No doctor found"
-                });
-            }
-
-            return Ok(doctors);
-        }
-
         // POST: api/doctor
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateDoctor(Doctor doctor)
         {
             _context.Doctors.Add(doctor);
@@ -84,7 +59,6 @@ namespace HospitalManagementApi.Controllers
 
         // PUT: api/doctor/1
         [HttpPut("{id}")]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateDoctor(
             int id,
             Doctor doctor)
@@ -116,7 +90,6 @@ namespace HospitalManagementApi.Controllers
 
         // DELETE: api/doctor/1
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteDoctor(int id)
         {
             var doctor = await _context.Doctors.FindAsync(id);
@@ -137,42 +110,6 @@ namespace HospitalManagementApi.Controllers
             {
                 message = "Doctor deleted successfully"
             });
-        }
-        // GET: api/doctor/my-profile
-        [HttpGet("my-profile")]
-        [Authorize(Roles = "Doctor")]
-        public async Task<IActionResult> GetMyProfile()
-        {
-            var doctorIdClaim = User.FindFirst("DoctorId")?.Value;
-
-            if (doctorIdClaim == null)
-            {
-                return BadRequest(new
-                {
-                    message = "DoctorId not found in token"
-                });
-            }
-
-            if (!int.TryParse(doctorIdClaim, out int doctorId))
-            {
-                return BadRequest(new
-                {
-                    message = "Invalid DoctorId"
-                });
-            }
-
-            var doctor = await _context.Doctors
-                .FirstOrDefaultAsync(d => d.Id == doctorId);
-
-            if (doctor == null)
-            {
-                return NotFound(new
-                {
-                    message = "Doctor not found"
-                });
-            }
-
-            return Ok(doctor);
         }
     }
 }
