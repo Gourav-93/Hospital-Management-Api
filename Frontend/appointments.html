@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointments - Hospital Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">HospitalCare+</a>
+        <div class="nav-links">
+            <a href="index.html">Dashboard</a>
+            <a href="doctors.html">Doctors</a>
+            <a href="patients.html">Patients</a>
+            <a href="appointments.html" class="active">Appointments</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">Appointments Schedule</h1>
+            <button class="btn btn-primary" id="open-add-modal">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
+                Book Appointment
+            </button>
+        </div>
+
+        <div class="glass-panel">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Date & Time</th>
+                        <th>Doctor</th>
+                        <th>Patient</th>
+                        <th>Status</th>
+                        <th style="text-align: right;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="appointments-table-body">
+                    <tr><td colspan="5" class="text-center empty-state">Loading appointments...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add/Edit Appointment Modal -->
+    <div class="modal-overlay" id="appointment-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Book Appointment</h2>
+                <button class="close-btn" id="close-modal">&times;</button>
+            </div>
+            <form id="appointment-form">
+                <input type="hidden" id="appointment-id">
+                
+                <div class="form-group">
+                    <label class="form-label">Doctor</label>
+                    <select id="appointment-doctor" class="form-control" required>
+                        <option value="">Select Doctor...</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Patient</label>
+                    <select id="appointment-patient" class="form-control" required>
+                        <option value="">Select Patient...</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Appointment Date</label>
+                    <input type="datetime-local" id="appointment-date" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Status</label>
+                    <select id="appointment-status" class="form-control" required>
+                        <option value="Pending">Pending</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="btn" id="cancel-btn">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Appointment</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script type="module" src="appointments.js"></script>
+</body>
+</html>
