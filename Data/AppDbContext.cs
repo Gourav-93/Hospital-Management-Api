@@ -16,8 +16,6 @@ namespace HospitalManagementApi.Data
 
         public DbSet<Appointment> Appointments { get; set; }
 
-        public DbSet<User> Users { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -35,20 +33,6 @@ namespace HospitalManagementApi.Data
                 .WithMany(p => p.Appointments)
                 .HasForeignKey(a => a.PatientId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            // User -> Doctor
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Doctor)
-                .WithMany()
-                .HasForeignKey(u => u.DoctorId)
-                .OnDelete(DeleteBehavior.SetNull);
-
-            // User -> Patient
-            modelBuilder.Entity<User>()
-                .HasOne(u => u.Patient)
-                .WithMany()
-                .HasForeignKey(u => u.PatientId)
-                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }
