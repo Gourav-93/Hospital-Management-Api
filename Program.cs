@@ -1,8 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using HospitalManagementApi.Data;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,8 +24,6 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     )
 );
 
-builder.Services.AddAuthorization();
-
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
@@ -41,11 +36,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors("AllowAll");
-
-// IMPORTANT
-app.UseAuthentication();
-
-app.UseAuthorization();
 
 app.MapControllers();
 
