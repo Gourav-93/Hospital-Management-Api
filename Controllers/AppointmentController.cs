@@ -16,7 +16,6 @@ namespace HospitalManagementApi.Controllers
             _context = context;
         }
 
-        // GET: api/appointment
         [HttpGet]
         public async Task<IActionResult> GetAllAppointments()
         {
@@ -45,7 +44,6 @@ namespace HospitalManagementApi.Controllers
             return Ok(appointments);
         }
 
-        // GET: api/appointment/1
         [HttpGet("{id}")]
         public async Task<IActionResult> GetAppointmentById(int id)
         {
@@ -83,7 +81,6 @@ namespace HospitalManagementApi.Controllers
             return Ok(appointment);
         }
 
-        // POST: api/appointment
         [HttpPost]
         public async Task<IActionResult> CreateAppointment(
             Appointment appointment)
@@ -134,14 +131,10 @@ namespace HospitalManagementApi.Controllers
             });
         }
 
-        // PUT: api/appointment/1
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateAppointment(
-            int id,
-            Appointment appointment)
+        public async Task<IActionResult> UpdateAppointment(int id,Appointment appointment)
         {
-            var existingAppointment =
-                await _context.Appointments.FindAsync(id);
+            var existingAppointment = await _context.Appointments.FindAsync(id);
 
             if (existingAppointment == null)
             {
@@ -200,7 +193,6 @@ namespace HospitalManagementApi.Controllers
             });
         }
 
-        // DELETE: api/appointment/1
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAppointment(int id)
         {
